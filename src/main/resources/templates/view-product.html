@@ -1,0 +1,279 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CATEGORY</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+<script th:src="@{/js/bootstrap-multiselect.js}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$('#categorySearch').multiselect({
+		nonSelectedText : 'Chọn thể loại',
+		enableFiltering : true,
+		enableCaseInsensitiveFiltering : true,
+		includeSelectAllOption : true,
+		buttonWidth : '100%'
+	});
+
+});
+</script>
+<style type="text/css">
+.container {
+	width: auto;
+	margin: auto;
+	border-radius: 5px;
+	background-color: #;
+	padding: 50px;
+}
+td{
+	width: 50px;
+}
+</style>
+
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>Trang Sản Phẩm</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content list">
+				<h2>Danh sách Sản Phẩm</h2>
+				<div th:if="${success}"
+					class="row alert alert-success alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<span th:text="${success}"></span>
+				</div>
+				<div class="row">
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PRD_EMPLOYEE')" 
+					th:href="@{/admin/product/}"
+						class="btn btn-success pull-left"> <span
+						class="glyphicon glyphicon-plus"></span> Thêm mới sản phẩm
+					</a>
+					<form class="form-inline pull-right" action="#"
+						th:action="@{/admin/product/dataSearch}" method="GET">
+						<div class="form-group">
+							<label for="nameprd" class="mr-sm-2">Tên sách:</label> <input
+								type="text" class="form-control" name="nameprd"
+								th:value="${session.NAMEPRD}"
+								placeholder="Nhập tên sách cần tìm ..." />
+						</div>
+						<div class="form-group">
+							<label for="name" class="mr-sm-2">Thể loại:</label> <select
+								class="form-control" id="categorySearch" name="categorySearch[]"
+								multiple>
+								<option th:each="item: ${CATEGORY}" th:value="${item.id}"
+									th:text="${item.theloai}"></option>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary">
+							<span class="glyphicon glyphicon-search"></span>Tìm kiếm
+						</button>
+					</form>
+				</div>
+
+				<th:block th:if="${null == products}">
+					<h3 style="text-align: center;" th:text="${session.messenger}"></h3>
+				</th:block>
+				<th:block th:unless="${null == products}">
+					<nav class="row justify-content-center wow fadeIn"
+						data-wow-delay="0.2s">
+
+
+						<div class="row">
+							<table class="table  ">
+								<thead>
+										<tr>
+											<th>Mã sách</th>
+											<th>Tên sách</th>
+											<th>Năm phát hành</th>
+											<th>Nhà xuất bản</th>
+											<th>Tác giả</th>	
+											<th>Số trang</th>
+											<th>Đơn giá</th>	
+											<th>Hình ảnh</th>	
+											<th>Thể loại</th>
+											<th>Giảm giá</th>	
+											<th>Nổi bật</th>	
+											<th>Sách mới</th>	
+											<th>Miêu tả</th>			
+											
+											<th>Sửa</th>
+											<th>Xóa</th>
+										</tr>
+									</thead>
+								<tbody>
+									<tr  th:each="product : ${products.pageList}">
+										<td th:text="${product.id}"></td>
+										<td><a
+											th:href="@{/chi-tiet-san-pham/{id}(id=${product.id})}"
+											th:text="${product.name}"></a></td>
+										<td th:text="${product.plsy}"></td>
+										<td th:text="${product.nxb}"></td>
+										<td th:text="${product.author}"></td>
+										<td th:text="${product.pagenum}"></td>
+										<td th:text="${#numbers.formatCurrency(product.price)}"></td>
+										<td width="100"><img alt=""
+											th:src="@{'/getimage/'+${product.image}}" width="80"
+											height="70" /></td>
+										<td th:text="${product.categorys.theloai}"></td>
+										<td th:text="${#numbers.formatCurrency((product.sale * product.price)/100)}"></td>
+										<td th:text="${product.highlight}"></td>
+										<td th:text="${product.new_product}"></td>
+										<td th:text="${product.details}"></td>
+										<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')"><a
+											th:href="@{'/admin/product/edit/' + ${product.id}}"><span
+												class="glyphicon glyphicon-pencil"></span></a></td>
+										<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')"><a
+											th:href="@{'/admin/product/delete/' + ${product.id}}"><span
+												class="glyphicon glyphicon-trash"></span></a></td>
+										
+									</tr>
+								</tbody>
+
+								<!-- <tbody th:each="product : ${products.pageList}">
+
+									<tr>
+										<td height="50px">MÃ SÁCH</td>
+										<td th:text="${product.id}"></td>
+									</tr>
+									<tr>
+										<td>TÊN SÁCH</td>
+										<td><a
+											th:href="@{/chi-tiet-san-pham/{id}(id=${product.id})}"
+											th:text="${product.name}"></a></td>
+									</tr>
+									<tr>
+										<td>NĂM PHÁT HÀNH</td>
+										<td th:text="${product.plsy}"></td>
+									</tr>
+									<tr>
+										<td>NHÀ XUẤT BẢN</td>
+										<td th:text="${product.nxb}"></td>
+									</tr>
+									<tr>
+										<td>TÁC GIẢ</td>
+										<td th:text="${product.author}"></td>
+									</tr>
+
+									<tr>
+										<td>SỐ TRANG</td>
+										<td th:text="${product.pagenum}"></td>
+									</tr>
+									<tr>
+										<td>ĐƠN GIÁ</td>
+										<td th:text="${product.price}"></td>
+									</tr>
+									<tr>
+										<td>HÌNH ẢNH</td>
+										<td width="100"><img alt=""
+											th:src="@{'/getimage/'+${product.image}}" width="80"
+											height="70" /></td>
+									</tr>
+									<tr>
+										<td>THỂ LOẠI</td>
+										<td th:text="${product.categorys.theloai}"></td>
+									</tr>
+									<tr>
+										<td>GIẢM GIÁ</td>
+										<td th:text="${#numbers.formatCurrency(product.sale)}">%</td>
+									</tr>
+									<tr>
+										<td>NỔI BẬT</td>
+										<td th:text="${product.highlight}"></td>
+									</tr>
+									<tr>
+										<td>SÁCH MỚI</td>
+										<td th:text="${product.new_product}"></td>
+									</tr>
+									<tr>
+										<td>MIÊU TẢ</td>
+										<td th:text="${product.details}"></td>
+									</tr>
+									<tr>
+										<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')"><a
+											th:href="@{'/admin/product/edit/' + ${product.id}}"><span
+												class="glyphicon glyphicon-pencil"></span></a></td>
+									</tr>
+									<tr>
+										<td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')"><a
+											th:href="@{'/admin/product/delete/' + ${product.id}}"><span
+												class="glyphicon glyphicon-trash"></span></a></td>
+									</tr>
+
+								</tbody> -->
+							</table>
+						</div>
+							<div>Tổng số trang: [[${totalPageCount}]]
+							&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Trang: [[${currentIndex}]] /
+							[[${totalPageCount}]]</div>
+						<ul class="pagination">
+
+							<li
+								th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:href="@{/cart/page/1}">Đầu</a>
+							</li>
+							<li
+								th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+								<a class="page-link" aria-label="Previous"
+								th:href="@{|${baseUrl}${currentIndex - 1}|}"
+								title='Go to previous page'><span aria-hidden="true">«</span>
+									<span class="sr-only">Lui</span></a>
+							</li>
+							<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+								th:class="${item == currentIndex ? 'page-item active' :'page-item' }">
+								<a class="page-link" th:href="@{|${baseUrl}${item}|}"> <span
+									th:text='${item}'>1</span>
+							</a>
+							</li>
+							<li
+								th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+								<a class="page-link" aria-label="Next"
+								th:href="@{|${baseUrl}${currentIndex + 1}|}"
+								title='Go to next page'><span aria-hidden="true">»</span> <span
+									class="sr-only">Tới</span></a>
+							</li>
+							<li
+								th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+								<a class="page-link" th:href="@{|${baseUrl}${totalPageCount}|}">Cuối</a>
+							</li>
+						</ul>
+					</nav>
+				</th:block>
+
+			</div>
+
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>

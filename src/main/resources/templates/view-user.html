@@ -1,0 +1,372 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGƯỜI DÙNG</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var urls = "/admin/nguoidung/ #myModals";
+	$('#model-body1').html(event).load(urls);
+	$('#btn').click(function(event){
+		event.preventDefault();
+		$('#myModal').modal("hide");
+	});
+	
+	$('.buttonDelete').on('click', function(event){
+		event.preventDefault();
+		$('#myDelete').modal();
+
+			
+		$('#delRef').click(function(){
+			$('#formDelete').submit();
+		});
+	});
+	
+	$('.edit-record').on('click', function(event){
+		event.preventDefault();
+		//	$('input[name="nhomnguoidung"]').prop("checked", false);
+			$('input[name="vaitro"]').prop("checked", false);
+//			var url = $('#formEdit').attr('action');
+		var uu = $(this).attr('href');
+		console.log(uu);
+		var id = GetURLParameter(uu, 'id');
+		console.log(id);
+		$.ajax({
+			type: "GET",
+			contentType: "application/json",
+//				url: "/login/check",
+			url: "/admin/nguoidung/nguoidung-update",
+			data: {
+				id: id
+				
+			},
+//				console.log(data1);
+//				data: {
+//					url: url
+//				},
+			dataType: "json",
+			timeout: 10000,
+			success: function(data){
+
+				console.log(data);
+				$('#idUpdate').val(data.id);
+				$('#mUpdate').val(data.manguoidung);
+				$('#tUpdate').val(data.tennguoidung);
+				$('#pUpdate').val(data.password);
+				$('#eUpdate').val(data.email);
+				$('#phoneUpdate').val(data.phone);
+				$('input:radio[value="' + data.gender + '"]').prop('checked', true);
+			/* 	var ns = getData(data.nhoms);
+					if(ns != null){
+						$('input[name="nhomnguoidung"]').val(ns);
+					}; */
+				var vts = getData(data.vaitros);
+					if(vts != null){
+						$('input[name="vaitro"]').val(vts);
+					};
+			}
+		});
+	});
+	
+	$('.view').on('click', function(event){
+		event.preventDefault();
+		$('#myChitiet').modal("hide");
+	});
+});
+	
+	function GetURLParameter(sPageURL, sParam){
+		var sURLVariable = sPageURL.split('?');
+		var sParameterName = sURLVariable[1].split('=');
+			if(sParameterName[0] == sParam){
+				return sParameterName[1];
+			}
+	}
+	
+	function getData(data){
+		if(data == "[]"){
+			return null;
+		} else {
+			var temp = data.substring(1, data.length-1);
+			console.log(temp);
+			return temp.split(", ");
+		}
+	}
+</script>
+
+
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>TRANG NGƯỜI DÙNG</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content form">
+				<div class="row">
+					<h2 class="myclass">Danh sách người dùng</h2>
+					<hr>
+					<!-- <button type="submit" class="btn btn-primary" data-toggle="modal"
+						data-target="#myModal" id="btn">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button> -->
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STM_EMPLOYEE')" 
+					th:href="@{/admin/nguoidung/}"
+						class="btn btn-primary pull-left"> <span
+						class="glyphicon glyphicon-plus"></span>
+					</a>
+					
+					<!-- The Modal Add New-->
+					
+
+
+						<form th:action="@{/admin/nguoidung/list/search/1}" id="dataSearch"
+							class="form-inline pull-right">
+							<input type="text" class="form-control" name="keyword"
+								th:value="${session.KEYWORK}" placeholder="Tìm kiếm...">
+							<button type="submit" class="btn btn-primary" id="search">Tìm
+								kiếm</button>
+
+						</form>
+						<th:block th:if="${#lists.isEmpty(NGUOIDUNGS.pageList)}">
+							<h2>Không tìm thấy chức năng</h2>
+						</th:block>
+
+
+
+						<th:block th:unless="${#lists.isEmpty(NGUOIDUNGS.pageList)}">
+
+							<div class="row">
+								<form th:action="@{/admin/nguoidung/delete}" method="get"
+									id="formDelete">
+<button class="btn btn-primary buttonDelete">
+						<i class="glyphicon glyphicon-trash"></i>
+					</button>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Chọn</th>
+												<th>Id</th>
+												<th>Mã người dùng</th>
+												<th>Tên người dùng</th>
+												<th>Email</th>
+												<th>Giới tính</th>
+
+												<th>Sửa</th>
+												<th>Xem</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="nguoidung: ${NGUOIDUNGS.pageList}">
+												<td><input type="checkbox" id="allDelete" name="id[]"
+													th:value="${nguoidung.id}"></td>
+												<td th:text="${nguoidung.id}"></td>
+												<td th:text="${nguoidung.manguoidung}"></td>
+												<td th:text="${nguoidung.tennguoidung}"></td>
+												<td th:text="${nguoidung.email}"></td>
+												<td><span th:if="${nguoidung.gender == 0}">Nam</span> <span
+													th:if="${nguoidung.gender == 1}">Nữ</span> <span
+													th:unless="${nguoidung.gender == 0 || nguoidung.gender == 1}">Không
+														xác định</span></td>
+												<!-- class="btn btn-primary edit" -->
+												<td><a
+													th:href="@{'/admin/nguoidung/edit/'+ ${nguoidung.id}}"
+													><span
+														class="glyphicon glyphicon-pencil"></span>
+													</a></td>
+												<td><a th:href="@{/admin/nguoidung/nguoidung-chitiet/}"
+													data-toggle="modal" data-target="#myChitiet"
+													th:attrappend="data-target=${nguoidung.id}"><span
+														class="glyphicon glyphicon-eye-open"></span>
+													<!-- <i
+													class="fas fa-eye"></i> --></a> <!-- The Modal Chi tiet -->
+													<div class="modal" id="myChitiet"
+														th:attrappend="id=${nguoidung.id}">
+														<div class="modal-dialog">
+															<div class="modal-content chitiet">
+
+																<!-- Modal Header -->
+																<div class="modal-header">
+																	<h4>Thông tin chi tiết</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal">&times;</button>
+																</div>
+																<div id="chitiet-body">
+																	<table class="table table-bordered">
+																		<tr>
+																			<th>Id</th>
+																			<td th:text="${nguoidung.id}"></td>
+																		</tr>
+																		<tr>
+																			<th>Mã Người Dùng</th>
+																			<td th:text="${nguoidung.manguoidung}"></td>
+																		</tr>
+																		<tr>
+																			<th>Tên Người Dùng</th>
+																			<td th:text="${nguoidung.tennguoidung}"></td>
+																		</tr>
+																		<tr>
+																			<th>Email</th>
+																			<td th:text="${nguoidung.email}"></td>
+																		</tr>
+																		<tr>
+																			<th>Giới tính</th>
+																			<td><span th:if="${nguoidung.gender == 0}">Nam</span>
+																				<span th:if="${nguoidung.gender == 1}">Nữ</span> <span
+																				th:unless="${nguoidung.gender == 0 || nguoidung.gender == 1}">Không
+																					xác định</span></td>
+																		</tr>
+																		<tr>
+																			<th>Số điện thoại</th>
+																			<td th:text="${nguoidung.phone}"></td>
+																		</tr>
+																		<tr>
+																			<th>Ngày tạo</th>
+																			<td th:text="${nguoidung.createday}"></td>
+																		</tr>
+																		<tr>
+																			<th>Người tạo</th>
+																			<td th:text="${nguoidung.nguoitao}"></td>
+																		</tr>
+																		<tr>
+																			<th>Ngày cập nhật</th>
+																			<td th:text="${nguoidung.updateday}"></td>
+																		</tr>
+																		<tr>
+																			<th>Người cập nhật</th>
+																			<td th:text="${nguoidung.nguoiupdate}"></td>
+																		</tr>
+																		<!-- <tr>
+																	<th>Nhóm</th>
+																	<td>
+																		<ul th:each="n : ${nguoidung.nhomnguoidung} ">
+																			<li th:text="${n.tennhom}"></li>
+																		</ul>															
+																	</td>
+																</tr> -->
+																		<tr>
+																			<th>Quyền hạn</th>
+																			<td>
+																				<ul th:each="vt : ${nguoidung.vaitro}">
+																					<li th:text="${vt.tenvaitro}"></li>
+																				</ul>
+																			</td>
+																		</tr>
+
+																	</table>
+																</div>
+																<div class="modal-footer"></div>
+															</div>
+														</div>
+													</div></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+
+							<p class="showcount" th:text="'Số lượng: ' + ${sum}"></p>
+						<p class="showin"
+							th:text="'Trang '+ ${pageNumber} + ' trong tổng số ' + ${totalPageCount} + ' trang' "></p>
+
+							<!-- phan trang-->
+							<ul class="pagination">
+								<li
+									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" th:href="@{/admin/nguoidung/list}">Đầu</a>
+								</li>
+								<li
+									th:class="${currentIndex == 1} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" aria-label="Previous"
+									th:href="@{|/admin/nguoidung${baseUrl}${currentIndex - 1}|}"
+									title='Go to previous page'> <span aria-hidden="true"><<</span>
+										<span class="sr-only">Lui</span></a>
+								</li>
+								<li th:each="item: ${#numbers.sequence(beginIndex, endIndex)}"
+									th:class="${item == currentIndex ? 'page-item active' : 'page-item'}">
+									<a class="page-link" th:href="@{|/admin/nguoidung${baseUrl}${item}|}">
+										<span th:text='${item}'>1</span>
+								</a>
+								</li>
+								<li
+									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" aria-label="Next"
+									th:href="@{|/admin/nguoidung${baseUrl}${currentIndex + 1}|}"
+									title='Go to next page'> <span aria-hidden="true">>></span>
+										<span class="sr-only">Tiến</span></a>
+								</li>
+								<li
+									th:class="${currentIndex == totalPageCount} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link"
+									th:href="@{|/admin/nguoidung${baseUrl}${totalPageCount}|}">Cuối</a>
+								</li>
+							</ul>
+
+						</th:block>
+
+						<!-- The Modal Delete -->
+						<div class="modal" tabindex="-1" role="dialog" id="myDelete">
+							<div class="modal-dialog">
+								<div class="modal-content">
+
+									<!-- Modal Header -->
+									<div class="modal-header">
+
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div id="delete-body">
+										<h4>Bạn có chắc chắn răng muốn xóa thông tin này?</h4>
+
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="delRef" class="btn btn-primary ">Đúng,
+											Xóa thông tin này</button>
+										<button type="button" class="btn btn-danger"
+											data-dismiss="modal">Đóng</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>

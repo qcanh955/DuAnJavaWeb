@@ -1,0 +1,249 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGƯỜI DỤNG</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var url = $('#myModals').attr('action');
+		$.ajax({
+			contentType : "application/json",
+			url : "/login/check",
+			data : {
+				url : url
+			},
+			dataType : "json",
+			timeout : 10000,
+			success : function(data) {
+				if (data > 0) {
+					$('.them').show();
+				} else {
+					$('.them').hide();
+					alert("Bạn không dùng được chức năng này");
+				}
+			},
+		});
+
+		var href = $('.sach').attr('href');
+		$.ajax({
+			contentType : "application/json",
+			url : "/login/check",
+			data : {
+				url : url
+			},
+			dataType : "json",
+			timeout : 10000,
+			success : function(data) {
+				if (data > 0) {
+					$('.sach').show();
+				} else {
+					$('.sach').hide();
+					alert("Bạn không dùng được chức năng này");
+				}
+			}
+		});
+	});
+
+	function validate() {
+		var manguoidung = document.form.manguoidung.value;
+		var tennguoidung = document.form.tennguoidung.value;
+		var password = document.form.password.value;
+		var email = document.form.email.value;
+		var createday = document.form.createday.value;
+		var nhomnguoidung = document.form.nhomnguoidung.value;
+		var chucnang = document.form.chucnang.value;
+		var vaitro = document.form.vaitro.value;
+		var pattern = "^[a-zA-Z][a-zA-Z0-9._]+[@][a-z0-9A-Z]+([.][a-z0-9A-Z]+)+$";
+		if (manguoidung == null || manguoidung == "") {
+			alert("Làm ơn hãy nhập mã");
+			return false;
+		} else if (tennguoidung == null || tennguoidung == "") {
+			alert("Làm ơn hãy nhập tên");
+			return false;
+		} else if (password == null || password == "") {
+			alert("Làm ơn hãy nhập mật khẩu");
+			return false;
+		} else if (password.length < 6) {
+			alert("Làm ơn hãy nhập mật khẩu có độ dài lớn hơn 6");
+			return false;
+		} else if (email == null || email == "") {
+			alert("Làm ơn hãy nhập email");
+			return false;
+		} else if (!pattern.contains(email)) {
+			alert("Làm ơn hãy nhập đúng định dạng email");
+			return false;
+		} else if (createday == null || createday == "") {
+			alert("Làm ơn hãy nhập ngày tạo");
+			return false;
+		} else if (nhomnguoidung == null || nhomnguoidung == "") {
+			alert("Làm ơn hãy chọn nhóm người dùng");
+			return false;
+		} else if (chucnang == null || chucnang == "") {
+			alert("Làm ơn hãy chọn chức năng");
+			return false;
+		} else if (vaitro == null || vaitro == "") {
+			alert("Làm ơn hãy chọn quyền hạn cho phép");
+			return false;
+		}
+
+	}
+</script>
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>TRANG NGƯỜI DÙNG</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content form">
+				<div class="row">
+					<!-- <h2 class="myclass">Thêm chức năng</h2> -->
+					<form th:action="@{/nguoidung/doUpdate}" th:object="${NGUOIDUNG}"
+						onsubmit="return validate()" id="myModals">
+
+						<div class="form-group">
+							<label >ID </label>
+							
+								<input type="hidden" class="form-control" value="1" name="id"
+									th:field="*{id}">
+							
+
+
+						</div>
+
+						<div class="form-group">
+							<label >Mã người dùng </label>
+							
+								<input type="text" class="form-control"
+									placeholder="Nhập mã người dùng" name="manguoidung"
+									th:field="*{manguoidung}">
+							
+
+
+						</div>
+						<div class="form-group">
+							<label >Tên người dùng</label>
+							
+								<input type="text" class="form-control"
+									placeholder="Nhập tên người dùng" name="tennguoidung"
+									th:field="*{tennguoidung}">
+							
+
+
+						</div>
+						<div class="form-group ">
+							<label >Password(*)</label>
+							
+								<input type="password" class="form-control"
+									placeholder="Nhập password" name="password"
+									th:field="*{password}">
+							
+						</div>
+						<div class="form-group">
+							<label >Email(*)</label>
+							
+								<input type="text" class="form-control" placeholder="Nhập email"
+									name="email" th:field="*{email}">
+							
+
+						</div>
+						<div class="form-group">
+							<label >Phone(*)</label>
+							
+								<input type="text" class="form-control" placeholder="Nhập phone"
+									name="phone" th:field="*{phone}">
+							
+
+						</div>
+						<div class="form-group row">
+							<label >Giới tính</label>
+							
+
+								<!--value = 0 => Nam| 1 => Nu| 2 => LGBT -->
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="gender"
+										th:field="*{gender}" checked="checked" value="0" id="gender1">
+									<label class="form-check-label">Nam</label>
+								</div>
+
+								<div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="gender"
+										th:field="*{gender}" value="1" id="gender2"> <label
+										class="form-check-label">Nữ</label>
+								</div>
+
+
+								<!-- <div class="form-check form-check-inline">
+									<input type="radio" class="form-check-input" name="gender"
+										th:field="*{gender}" value="2" id="gender3"> <label
+										class="form-check-label">Không xác định</label>
+								</div> -->
+
+							</div>
+
+						
+
+						<div class="form-group row mot">
+							<label >Vai trò</label>
+							
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Chọn</th>
+											<th>Tên vai trò</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id="oo" th:each="vaitro: ${VAITROS}">
+											<td><input class="vt-update" type="checkbox"
+												name="vaitro" th:field="*{vaitro}" th:value="${vaitro.id}"></td>
+											<td th:text="${vaitro.tenvaitro}"></td>
+										</tr>
+									</tbody>
+								</table>
+							
+						</div>
+						<button type="submit" class="btn btn-primary">Lưu</button>
+						<button type="reset" class="btn btn-primary">Huỷ</button>
+						<a href="/admin/nguoidung/list/" class="btn btn-primary">Danh
+							sách</a>
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>

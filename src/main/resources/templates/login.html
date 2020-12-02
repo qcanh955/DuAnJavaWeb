@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:25:06 GMT -->
+<head>
+<meta charset="UTF-8" />
+<title>CNQ E-BOOK</title>
+<link href="/clients/image/ebfavicon.jpg" rel="icon" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- CSS Part Start-->
+<link rel="stylesheet" type="text/css"
+	href="/clients/css/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="/clients/css/slideshow.css"
+	media="screen" />
+<link rel="stylesheet" type="text/css" href="/clients/css/colorbox.html"
+	media="screen" />
+<link rel="stylesheet" type="text/css" href="/clients/css/carousel.css"
+	media="screen" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- CSS Part End-->
+<!-- JS Part Start-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/clients/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="/clients/js/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript" src="/clients/js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript"
+	src="/clients/js/colorbox/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="/clients/js/tabs.js"></script>
+<script type="text/javascript"
+	src="/clients/js/jquery.easing-1.3.min.js"></script>
+<script type="text/javascript" src="/clients/js/cloud_zoom.js"></script>
+<script type="text/javascript" src="/clients/js/custom.js"></script>
+<script type="text/javascript" src="/clients/js/jquery.dcjqaccordion.js"></script>
+<!-- JS Part End-->
+</head>
+<body>
+	<div class="main-wrapper">
+
+		<th:block th:include="/_header"></th:block>
+		<div id="container">
+			<!--Left Part-->
+			
+			<!--Left End-->
+			<!--Middle Part Start-->
+			<div id="content">
+				<!--Breadcrumb Part Start-->
+				<div class="breadcrumb">
+					<a th:href="@{/bookshop}">Trang chủ</a> »<a th:href="@{/dang-nhap}">Tài khoản đăng
+						nhập</a>
+				</div>
+				<!--Breadcrumb Part End-->
+				<h1>TÀI KHOẢN ĐĂNG NHẬP</h1>
+				<div class="login-content">
+					<div class="left">
+						<h2>Đăng ký tài khoản</h2>
+						<form th:action="@{/dang-ki}" th:object=${ORDER} method="post">
+
+						<div class="form-group">
+							<!-- <label>ID</label>  -->
+							<input type="hidden" th:field="*{id}" class="form-control"
+								name="id" placeholder="Nhập id" id="id" value="">
+						</div>
+
+						<div class="form-group">
+							<label>Tên khách hàng:</label> <input type="text"
+								th:field="*{full_name}" class="form-control"
+								name="full_name" placeholder="Nhập tên" id="full_name">
+							<span
+								th:if="${#fields.hasErrors('full_name')}"
+								th:errors="*{full_name}" class="alert-danger">tên
+								error</span>
+						</div>
+
+						<div class="form-group">
+							<label>Địa chỉ:</label> <input type="text" th:field="*{address}"
+								class="form-control" name="address" placeholder="Nhập địa chỉ"
+								id="address" value="0">
+							<span
+								th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+								class="alert-danger">address error</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Email:</label> <input type="email" th:field="*{email}"
+								class="form-control" name="email" placeholder="Nhập email"
+								id="email" value="0">
+							<span
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="alert-danger">email error</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Mật khẩu:</label> <input type="password"
+								class="form-control" th:field="*{matkhau}" name="matkhau"
+								id="matkhau" placeholder="Nhập mật khẩu" value="">
+							<span
+								th:if="${#fields.hasErrors('matkhau')}" th:errors="*{matkhau}"
+								class="alert-danger">password error</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Số điện thoại:</label> <input type="number"
+								th:field="*{phone}" class="form-control" name="phone"
+								placeholder="Nhập số điện thoại" id="phone" value="">
+							<span
+								th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+								class="alert-danger">email error</span>
+
+						</div>
+						<h3 style="color: orange;">[[${success}]]</h3>
+
+						<!-- <button type="submit" class="btn btn-danger">Đăng kí</button>
+						&nbsp;&nbsp;&nbsp;
+						<button type="reset" class="btn btn-danger">Huỷ</button> -->
+						<input type="submit" class="button" value="Đăng Kí">
+						<input type="reset" class="button" value="Hủy">
+
+					</form>
+					</div>
+					<div class="right">
+						<h2>Đăng nhập tài khoản</h2>
+						<form action="/kiemtra-dangnhap" method="post">
+							<div class="form-group">
+								<label>Tài Khoản:</label> <input type="email"
+									class="form-control" name="email" placeholder="Nhập email">
+							</div>
+							<div class="form-group">
+								<label>Mật khẩu:</label> <input type="password"
+									class="form-control" name="matkhau" placeholder="Nhập mật khẩu">
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox"> Remember me</label>
+							</div>
+							<h3 style="color: red;">[[${success}]]</h3>
+
+							<!-- <button type="submit" class="btn btn-danger">Đăng nhập</button> -->
+							<input type="submit" class="button" value="Đăng nhập">
+
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<!--Middle Part End-->
+			<div class="clear"></div>
+			
+		</div>
+	</div>
+	<!--Footer Part Start-->
+	<th:block th:include="/_footer"></th:block>
+	<!--Footer Part End-->
+</body>
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:01 GMT -->
+</html>

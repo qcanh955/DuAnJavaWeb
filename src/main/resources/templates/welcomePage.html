@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+		 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+   <head>
+      <title th:utext="${title}"></title>
+   </head>
+    
+   <body>
+    
+      <!-- Include _menu.html -->
+      <th:block th:include="/_menu"></th:block>  
+        Logged user: <span sec:authentication="name"></span> <br/> 
+    Roles: <span sec:authentication="principal.authorities"></span>
+      <h2>Message : <span th:utext="${message}"></span></h2>
+       
+   </body>
+</html>

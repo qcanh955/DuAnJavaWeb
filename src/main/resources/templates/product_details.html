@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:25:06 GMT -->
+<head>
+<meta charset="UTF-8" />
+<title>CNQ E-BOOK</title>
+<link href="/clients/image/ebfavicon.jpg" rel="icon" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- CSS Part Start-->
+<link rel="stylesheet" type="text/css"
+	href="/clients/css/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="/clients/css/slideshow.css"
+	media="screen" />
+<link rel="stylesheet" type="text/css" href="/clients/css/colorbox.html"
+	media="screen" />
+<link rel="stylesheet" type="text/css" href="/clients/css/carousel.css"
+	media="screen" />
+<!-- CSS Part End-->
+<!-- JS Part Start-->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/clients/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="/clients/js/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript" src="/clients/js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript"
+	src="/clients/js/colorbox/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="/clients/js/tabs.js"></script>
+<script type="text/javascript"
+	src="/clients/js/jquery.easing-1.3.min.js"></script>
+<script type="text/javascript" src="/clients/js/cloud_zoom.js"></script>
+<script type="text/javascript" src="/clients/js/custom.js"></script>
+<script type="text/javascript" src="/clients/js/jquery.dcjqaccordion.js"></script>
+<!-- JS Part End-->
+</head>
+<body>
+	<div class="main-wrapper">
+		<!-- Header Parts Start-->
+		<th:block th:include="/_header"></th:block>  
+		<div id="container">
+			<!--Left Part-->
+
+			<!--Left End-->
+			<!--Middle Part Start-->
+			<div id="content">
+				<!--Breadcrumb Part Start-->
+				<div class="breadcrumb">
+					<a th:href="@{/bookshop}">Home</a> » 
+					<!-- <a href="#"
+						th:text="${productByIDCategory.theloai}"></a> -->
+				</div>
+				<!--Breadcrumb Part End-->
+				<div class="product-info">
+					<div class="left">
+						<div class="image">
+							<img th:src="@{'/getimage/'+${product.image}} " alt=""
+								height="350" width="350">
+						</div>
+					</div>
+					<div class="right">
+						<h1 th:text="${product.name}"></h1>
+						<div class="description">
+							<span>Tác giả:</span> <a href="#" th:text="${product.author}"></a><br>
+							<span>Mã sách: </span> <a href="#" th:text="${product.id_product}"></a><br>
+							<span>Nhà xuất bản: </span> <a href="#" th:text="${product.nxb}"></a>
+						</div>
+						
+							<div class="price">
+								Giá: <span class="price-old"
+									th:text="${#numbers.formatCurrency(product.price)}"></span>
+								<div class="price-tag"
+									th:text="${#numbers.formatCurrency((product.price-(product.price*product.sale)/100))}"></div>
+
+							</div>
+							<div class="cart">
+								<div>
+									<div class="qty">
+										<strong>Số lượng:</strong> 
+										 <a href="javascript:void(-1);"
+											class="qtyBtn mines">-</a> <input type="text" value="1"
+											size="2" name="quantity" class="w30" id="qty"> <a
+											href="javascript:void(+1);" class="qtyBtn plus">+</a>
+										<div class="clear"></div> 
+										<!-- <input
+											type="number" min="1" max="20" value="1" name="" /> -->
+
+									</div>
+									<a class="cart" th:href="@{'/AddCart/' + ${product.id_product}}"><input type="button"
+										class="button" id="button-cart" value="Thêm vào giỏ"
+										onClick="addToCart('40');"></a>
+
+
+								</div>
+								
+							</div>
+							<script type="text/javascript"
+								src="../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-506f325f57fbfc95"></script>
+							<!-- AddThis Button END -->
+						
+							</br> <a class="cart" th:href="@{/bookshop}"><input type="button"
+								class="button" id="button-cart" value="Mua tiếp"
+								onClick="addToCart('40');"></a>
+						
+					</div>
+
+				</div>
+				<!-- Tabs Start -->
+				<div id="tabs" class="htabs">
+					<h3>Giới thiệu Sách</h3>
+				</div>
+				<div id="tab-description" class="tab-content">
+					<p th:text="${product.details}"></p>
+					<h3>Thông tin chi tiết:</h3>
+
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>Mã sách</td>
+								<td th:text="${product.id_product}"></td>
+							</tr>
+							<tr>
+								<td>Tên sách</td>
+								<td th:text="${product.name}"></td>
+							</tr>
+							<tr>
+								<td>Tác giả</td>
+								<td th:text="${product.author}"></td>
+							</tr>
+							<tr>
+								<td>Nhà xuất bản</td>
+								<td th:text="${product.nxb}"></td>
+							</tr>
+							<tr>
+								<td>Số trang</td>
+								<td th:text="${product.pagenum}"></td>
+							</tr>
+							<!-- <tr>
+								<td>Thể loại</td>
+								<td th:text="${productByIDCategory.theloai}"></td>
+							</tr> -->
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- Tabs End -->
+				<!-- Related Products Start -->
+				<div class="box">
+					<div class="box-heading">CÙNG THỂ LOẠI</div>
+					<div class="box-content">
+						<div class="box-product">
+
+							<th:block th:each="item,index: ${productByIDCategory}">
+								<div th:if="${index.first}" class="item active">
+									<div>
+
+										<div class="image">
+											<a th:href="@{'/chi-tiet-san-pham/' + ${item.id_product}}"><img
+												th:src="@{'/getimage/'+${item.image}} " alt="" height="152"
+												width="152" /></a>
+										</div>
+										<div class="name">
+											<a href="#" th:text="${item.name}"></a>
+										</div>
+										<div class="price"
+											th:text="${#numbers.formatCurrency(item.price)}"></div>
+									</div>
+								</div>
+								<div th:unless="${index.first}" class="item">
+									<div>
+										<div class="image">
+											<a th:href="@{'/chi-tiet-san-pham/' + ${item.id_product}}"><img
+												th:src="@{'/getimage/'+${item.image}} " alt="" height="152"
+												width="152" /></a>
+										</div>
+										<div class="name">
+											<a href="#" th:text="${item.name}"></a>
+										</div>
+										<div class="price"
+											th:text="${#numbers.formatCurrency(item.price)}"></div>
+									</div>
+								</div>
+							</th:block>
+
+						</div>
+					</div>
+				</div>
+				<!-- Related Products End -->
+			</div>
+			<!--Middle Part End-->
+			<div class="clear"></div>
+			<div class="social-part">
+				<!--Facebook Fun Box Start-->
+				<div id="facebook">
+					<div class="facebook-inner">
+						<div id="fb-root"></div>
+						<script>
+							(function(d, s, id) {
+								var js, fjs = d.getElementsByTagName(s)[0];
+								if (d.getElementById(id))
+									return;
+								js = d.createElement(s);
+								js.id = id;
+								js.src = "../../../connect.facebook.net/en_US/all.js#xfbml=1";
+								fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));
+						</script>
+						<div class="fb-like-box"
+							data-href="http://www.facebook.com/160281810726316"
+							data-width="585" data-show-faces="true" data-stream="false"
+							data-header="false" data-border-color="#fff"></div>
+					</div>
+				</div>
+				<!--Facebook Fun Box End-->
+				<!--Twitter Feeds Box Start-->
+
+				<!--Twitter Feeds Box End-->
+			</div>
+		</div>
+	
+	<!--Footer Part Start-->
+	<div id="footer">
+		<div class="column">
+			<h3>Information</h3>
+			<ul>
+				<li><a href="about-us.html">About Us</a></li>
+				<li><a href="about-us.html">Delivery Information</a></li>
+				<li><a href="about-us.html">Privacy Policy</a></li>
+				<li><a href="elements.html">Elements</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h3>Customer Service</h3>
+			<ul>
+				<li><a href="contact-us.html">Contact Us</a></li>
+				<li><a href="#">Returns</a></li>
+				<li><a href="sitemap.html">Site Map</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h3>Extras</h3>
+			<ul>
+				<li><a href="#">Brands</a></li>
+				<li><a href="#">Gift Vouchers</a></li>
+				<li><a href="#">Affiliates</a></li>
+				<li><a href="#">Specials</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h3>My Account</h3>
+			<ul>
+				<li><a href="#">My Account</a></li>
+				<li><a href="#">Order History</a></li>
+				<li><a href="#">Wish List</a></li>
+				<li><a href="#">Newsletter</a></li>
+			</ul>
+		</div>
+		<div class="contact">
+			<ul>
+				<li class="address">Second plaza, Delhi, india.</li>
+				<li class="mobile">191 191 91 19</li>
+				<li class="email"><a href="mailto:info@demo.com">info@demo.com</a></li>
+				<li class="fax">191 191 91 19</li>
+			</ul>
+		</div>
+		<div class="social">
+			<a href="http://facebook.com/160281810726316" target="_blank"><img
+				src="/clients/image/facebook.png" alt="Facebook" title="Facebook"></a>
+			<a href="https://twitter.com/#!/#" target="_blank"><img
+				src="/clients/image/twitter.png" alt="Twitter" title="Twitter"></a>
+			<a href="https://plus.google.com/u/0/#" target="_blank"><img
+				src="/clients/image/googleplus.png" alt="Google+" title="Google+"></a>
+			<a href="http://pinterest.com/#" target="_blank"><img
+				src="/clients/image/pinterest.png" alt="Pinterest" title="Pinterest"></a>
+			<a href="#" target="_blank"><img src="/clients/image/rss.png"
+				alt="RSS" title="RSS"></a> <a href="http://www.vimeo.com/#"
+				target="_blank"><img src="/clients/image/vimeo.png" alt="Vimeo"
+				title="Vimeo"></a> <a href="http://www.flickr.com/photos/#"
+				target="_blank"><img src="/clients/image/flickr.png"
+				alt="flickr" title="Flickr"></a> <a
+				href="http://www.youtube.com/#" target="_blank"><img
+				src="/clients/image/youtube.png" alt="YouTube" title="YouTube"></a>
+			<a href="skype:#?call" target="_blank"><img
+				src="/clients/image/skype.png" alt="skype" title="Skype"></a> <a
+				href="#" target="_blank"><img src="/clients/image/blogger.png"
+				alt="Blogger" title="Blogger"></a>
+		</div>
+		<div class="clear"></div>
+		<div id="powered">
+			Bigshop <a href="#">Html Template </a> &copy; 2013 &nbsp;|&nbsp;
+			Template By <a target="_blank" href="http://harnishdesign.net/">Harnish
+				Design</a>
+			<div class="payments_types">
+				<img src="/clients/image/payment_paypal.png" alt="paypal"
+					title="PayPal"> <img
+					src="/clients/image/payment_american.png" alt="american-express"
+					title="American Express"> <img
+					src="/clients/image/payment_2checkout.png" alt="2checkout"
+					title="2checkout"> <img
+					src="/clients/image/payment_maestro.png" alt="maestro"
+					title="Maestro"> <img
+					src="/clients/image/payment_discover.png" alt="discover"
+					title="Discover"> <img
+					src="/clients/image/payment_mastercard.png" alt="mastercard"
+					title="MasterCard"> <img
+					src="/clients/image/payment_visa.png" alt="visa" title="Visa">
+				<img src="/clients/image/payment_sagepay.png" alt="sagepay"
+					title="sagepay"> <img
+					src="/clients/image/payment_moneybookers.png" alt="moneybookers"
+					title="Moneybookers">
+			</div>
+		</div>
+	</div>
+	</div>
+	<!--Footer Part End-->
+</body>
+
+<!-- Mirrored from demo.harnishdesign.net/html/bigshop/product.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:26:18 GMT -->
+</html>

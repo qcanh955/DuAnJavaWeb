@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CATEGORY</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+
+ 
+
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>TRANG THỂ LOẠI</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content form">
+        <div class="row">
+         <h2 class="myclass">Sửa thể loại</h2>
+					<form th:action="${ACTION}" th:object=${CATEGORY} method="post">
+						<div class="form-group">
+							<label>ID :&ensp;<a th:text="${CATEGORY.id}"></a></label> <input type="hidden"
+								th:field="*{id}" class="form-control" name="id"
+								placeholder="Nhập id" id="id" value="">
+						</div>
+						
+						<div class="form-group">
+							<label>Tên thể loại</label> <input type="text"
+								th:field="*{theloai}" class="form-control" name="theloai"
+								placeholder="Nhập tên thể loại" id="theloai" value=""><br> <span
+								th:if="${#fields.hasErrors('theloai')}" th:errors="*{theloai}"
+								class="alert-danger">Lỗi sửa tên thể loại</span>
+						</div>
+						<button type="submit" class="btn btn-primary">Sửa</button>
+						<a class="btn btn-primary" href="/admin/category/page/1">Danh sách</a>
+					</form>
+        </div>
+		</div>
+
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>

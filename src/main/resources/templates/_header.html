@@ -1,0 +1,77 @@
+<!-- Header Parts Start-->
+<div id="header">
+	<!-- Top Right part Links-->
+
+	<div id="welcome">
+		<div class="links">
+			Giỏ hàng
+			<ul>
+
+				<li><a href="#" id="wishlist-total">Wish List (0)</a></li>
+				<li><a th:href="@{/gio-hang}">Giỏ hàng</a></li>
+				<!-- <li><a href="checkout.html">Kiểm tra giỏ hàng</a></li> -->
+			</ul>
+		</div>
+		<div class="links">
+			Tài khoản
+			<ul>
+				<li th:if="${session.CUSTOMER}">
+					<a style="font-weight: bold;" th:href="@{/thong-tin-ca-nhan/}">
+						<i th:text="${session.CUSTOMER.full_name}"></i>
+					</a>
+					<a th:href="@{'/thay-doi-thong-tin/' +${session.CUSTOMER.id}}">Thay đổi thông tin</a>
+					<a th:href="@{/xu-li-hoa-don/}">Lịch sử mua hàng</a>
+					<a th:href="@{/dang-xuat}">Đăng xuất</a>
+				</li>
+				<li th:unless="${session.CUSTOMER}">
+					<a th:href="@{/dang-nhap}">Đăng nhập</a>
+					<!-- <a th:href="@{/dang-ky}">Đăng ký</a> -->
+				</li>
+				<!-- <li><a th:href="@{/dang-nhap}">Đăng nhập</a></li>
+				 <li><a th:href="@{/dang-ky}">Đăng ký</a></li> 
+ -->
+				<!-- <li><a th:href="@{/dang-xuat}">Đăng xuất</a></li> -->
+			</ul>
+		</div>
+
+	</div>
+	<div id="logo">
+		<a th:href="@{/bookshop}"><img src="/clients/image/eblogo.jpg"
+			title="ecommerce Html Template" alt="ecommerce Html Template"
+			height="66" width="201" /></a>
+	</div>
+	<div id="search">
+		<div class="button-search"></div>
+		<input type="text" value="" placeholder="" id="filter_name"
+			name="search">
+	</div>
+	<!--Mini Cart Start-->
+	<div id="cart">
+		<div class="heading">
+			<h4>
+				<img width="32" height="32" alt="small-cart-icon"
+					src="/clients/image/cart-bg.png" >
+			</h4>
+			<!-- <a style="font-weight: bold;"
+								th:href="@{'/gio-hang/'}">Số lượng:  <i
+									class="fa fa-shopping-bag"></i> <span class="badge"
+									th:text="${session.TotalQuantyCart}"></span></a> -->
+			<a th:href="@{'/gio-hang/'}">Số lượng: <span
+				th:text="${session.TotalQuantyCart}"></span>--> Giá: <span
+				th:text="${#numbers.formatCurrency(session.TotalPriceCart)}"></span></a>
+
+		</div>
+
+	</div>
+	<!--Mini Cart End-->
+</div>
+<!--Top Navigation Start-->
+<div id="menu">
+	<span>Menu</span>
+	<ul>
+		<li class="home"><a title="Home" th:href="@{/bookshop}"><span>Home</span></a></li>
+		<li><a th:href="@{/gioi-thieu}">Giới thiệu</a></li>
+		<li><a th:href="@{/lien-he}">Liên hệ</a></li>
+	</ul>
+</div>
+<!--Top Navigation Start-->

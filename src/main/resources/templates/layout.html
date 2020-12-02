@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!--/* Thymeleaf templating engine, Each token will be replaced by their respective titles in the resulting page. */-->
+<title layout:title-pattern="$LAYOUT_TITLE :: $CONTENT_TITLE">CNQ
+	Book Shop Manage</title>
+
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="#" th:href="@{/css/select2.min.css}" />
+<link rel="stylesheet" href="#"
+	th:href="@{/css/select2-bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
+<!-- bootstrap datepicker -->
+<link rel="stylesheet"
+	th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/AdminLTE.min.css}" />
+<link rel="stylesheet" href="#"
+	th:href="@{/css/skins/_all-skins.min.css}" />
+
+<!--Bootstrap Select-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css" />
+
+<!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<link rel="icon" href="#" th:href="@{/img/favicon.ico}"
+	type="image/x-icon" />
+
+<!-- jQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<script src="#" th:src="@{/js/app.min.js}"></script>
+<script src="#" th:src="@{/js/jquery.slimscroll.min.js}"></script>
+<script src="#" th:src="@{/js/select2.full.min.js}"></script>
+<script src="#" th:src="@{/js/region.js}"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var menudd = Cookies.get('menu-dd');
+
+		if (menudd != null) {
+			$("#" + menudd).addClass("active");
+		} else {
+			Cookies.set('menu-dd', "user");
+		}
+
+		$(".treeview").each(function() {
+			$(this).click(function() {
+				$(this.id).addClass("active");
+				$("#" + Cookies.get('menu-dd')).removeClass("active");
+				Cookies.set('menu-dd', this.id);
+			});
+		});
+	});
+</script>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header class="main-header">
+			<!-- Logo -->
+			<a href="#" th:href="@{/admin}" class="logo"> <span
+				class="logo-mini"><b>CNQ</b></span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>CNQ Book</b>Manager</span>
+			</a>
+
+			<!-- Header Navbar -->
+			<nav class="navbar navbar-static-top" role="navigation">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button"> <span class="sr-only">Toggle navigation</span>
+				</a>
+				<!-- Navbar Right Menu -->
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+
+						<!-- User Account Menu -->
+						<li class="dropdown user user-menu">
+							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <!-- The user image in the navbar-->
+								<img src="/img/avatar5.png" class="user-image" alt="User Image" />
+								<!-- hidden-xs hides the username on small devices so only the image appears. -->
+								<span class="hidden-xs"
+								th:utext="${#request.userPrincipal.name}"> Cảnh Nguyễn</span>
+						</a>
+							<ul class="dropdown-menu">
+								<!-- The user image in the menu -->
+								<li class="user-header"><img src="/img/avatar5.png"
+									class="img-circle" alt="User Image" />
+									<p>
+										Chào Mừng: <span th:utext="${#request.userPrincipal.name}"> <br />
+											
+									</p>
+									
+									</li>
+								<!-- Menu Body -->
+
+								<!-- Menu Footer-->
+								<li class="user-footer">
+									<div class="pull-left">
+										<a th:href="@{/}" class="btn btn-default btn-flat">Trang cá nhân</a>
+									</div>
+									<div class="pull-right">
+										<a th:href="@{/logout}" class="btn btn-default btn-flat">Đăng
+											xuất</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<!-- Control Sidebar Toggle Button -->
+						<!-- 	<li><a href="#" data-toggle="control-sidebar"><i
+								class="fa fa-gears"></i></a></li> -->
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+
+				<!-- Sidebar user panel (optional) -->
+				<div class="user-panel">
+					<div class="pull-left image">
+						<img src="/img/avatar5.png" class="img-circle" alt="User Image" />
+					</div>
+					<div class="pull-left info">
+						<p th:utext="${#request.userPrincipal.name}">Cảnh Nguyễn</p>
+						<!-- Status -->
+						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+					</div>
+				</div>
+
+				<!-- Sidebar Menu -->
+				<ul class="sidebar-menu">
+					<li class="header">DANH SÁCH</li>
+
+					<li class="treeview" id="datamaster"><a href="/admin/nguoidung"><i
+							class="fa fa-th"></i> <span>QTHT - Người dùng</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/nguoidung/list/page/1}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Danh sách
+									người dùng</a></li>
+							<li><a th:href="@{/admin/nguoidung/}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Thêm người dùng</a></li>
+
+
+						</ul></li>
+
+					<li class="treeview" id="datamaster"><a href="/admin/vaitro"><i
+							class="fa fa-th"></i> <span>QTHT - Vai Trò</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/vaitro/list/page/1}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Danh sách
+									vai trò</a></li>
+							<li><a th:href="@{/admin/vaitro/}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Thêm vai trò</a></li>
+
+
+						</ul></li>
+
+					<li class="treeview" id="datamaster"><a href="/admin/chucnang"><i
+							class="fa fa-th"></i> <span>QTHT - Chức năng</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/chucnang/list/page/1}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Danh
+									sách chức năng</a></li>
+							<li><a th:href="@{/admin/chucnang/}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STM_EMPLOYEE')">Thêm chức năng</a></li>
+
+
+						</ul></li>
+
+					<li class="treeview" id="datamaster"><a href="/admin/category"><i
+							class="fa fa-th"></i> <span>Quản lí thể loại</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/category/page/1}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')">Danh sách thể
+									loại</a></li>
+							<li><a th:href="@{/admin/category/}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')">Thêm thể loại</a></li>
+
+
+						</ul></li>
+
+					<li class="treeview" id="datamaster"><a href="/admin/product"><i
+							class="fa fa-th"></i> <span>Quản lí sách</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/product/page/1}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')">Danh sách sản
+									phẩm</a></li>
+							<li><a th:href="@{/admin/product/}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PRD_EMPLOYEE')">Thêm sản phầm</a></li>
+
+						</ul></li>
+
+					<li class="treeview" id="laporan"><a href="/khachhang"><i
+							class="fa fa-th"></i> <span>Quản lí khách hàng</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/khachhang/list}" sec:authorize="hasRole('ROLE_ADMIN')">Danh sách khách
+									hàng</a></li>
+							<!-- <li><a th:href="@{/customer/}" sec:authorize="hasRole('ROLE_ADMIN')">Thêm khách hàng</a></li> -->
+						</ul></li>
+
+					<li class="treeview" id="laporan"><a href="#"><i
+							class="fa fa-th"></i> <span>Quản lí hóa đơn</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/hoadon/list}" sec:authorize="hasRole('ROLE_ADMIN')">Danh sách đơn hàng </a></li>
+
+						</ul></li>
+
+
+				</ul>
+				<!-- /.sidebar-menu -->
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+
+			<section class="content-header" layout:fragment="breadcrumb"></section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+			<section class="content" layout:fragment="content">XIN CHÀO !! ĐÂY LÀ TRANG QUẢN TRỊ
+					<!-- Logged user: <span sec:authentication="name"></span> <br />
+											Roles: <span sec:authentication="principal.authorities"></span> -->
+				</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<!-- Main Footer -->
+		<footer class="main-footer">
+			<strong> &copy; 2017 <script>
+				new Date().getFullYear() > 2017
+						&& document.write("-" + new Date().getFullYear());
+			</script> , Company.
+			</strong>
+		</footer>
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+	<!--Bootstrap Select-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$(function() {
+				$(".datepicker").datepicker({
+					todayBtn : "linked",
+					autoclose : true,
+					todayHighlight : true
+
+				});
+			});
+		});
+	</script>
+</body>
+</html>

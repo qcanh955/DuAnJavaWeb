@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KHÁCH HÀNG</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+
+
+
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>TRANG KHÁCH HÀNG</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content form">
+				<div class="row">
+					<h2 class="myclass">Đăng kí khách hàng</h2>
+					<form th:action="${ACTION}" th:object=${CUSTOMER} method="post">
+
+						<div class="form-group">
+							<!-- <label>ID</label>  -->
+							<input type="hidden" th:field="*{id}" class="form-control"
+								name="id" placeholder="Nhập id"  id="id" value="">
+						</div>
+						<div class="form-group">
+							<label>Tên đầy đủ</label> <input type="text"
+								th:field="*{fullname}" class="form-control"
+								name="fullname" placeholder="Nhập tên đầy đủ"
+								id="fullname"> <span
+								th:if="${#fields.hasErrors('fullname')}"
+								th:errors="*{fullname}" class="alert-danger">Lỗi nhập 
+								tên</span>
+						</div>
+
+						<div class="form-group">
+							<label>Mật khẩu:</label> <input type="password"
+								class="form-control" th:field="*{password}" name="password"
+								id="password" placeholder="Nhập mật khẩu" value=""> <span
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+								class="alert-danger">Lỗi nhập mật khẩu</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Email</label> <input type="text" th:field="*{email}"
+								class="form-control" name="email" placeholder="Nhập Email"
+								id="email" value=""><span
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="alert-danger">Lỗi nhập Email</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Địa chỉ</label> <input type="text" th:field="*{address}"
+								class="form-control" name="address" placeholder="Nhập địa chỉ"
+								id="address" value=""><span
+								th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+								class="alert-danger">Lỗi nhập địa chỉ</span>
+
+						</div>
+
+						<div class="form-group">
+							<label>Giới tính</label>
+							<div class="radio">
+								<!--value = 1 => Nam| 0 =>Nu -->
+
+								<label class="checkbox-inline"> <input type="radio"
+									th:field="*{gender}" name="gender" checked="checked" value="1"
+									id="gender1">Nam
+								</label> <label class="checkbox-inline"> <input type="radio"
+									th:field="*{gender}" name="gender" value="0" id="gender2">Nữ
+								</label>
+							</div>
+
+						</div>
+
+
+						<button type="submit" class="btn btn-primary">Lưu</button>
+						<button type="reset" class="btn btn-primary">Huỷ</button>
+						<a class="btn btn-primary" href="/admin/customer/list">Danh sách</a>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>

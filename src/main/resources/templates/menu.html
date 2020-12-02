@@ -1,0 +1,21 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     style="border: 1px solid #ccc;padding:5px;margin-bottom:20px;">
+ 
+ <!--  <a th:href="@{/welcome}">Home</a>
+ 
+     | &nbsp; -->
+  
+   <a th:href="@{/bookshop}">Trang Giao Diện</a>
+  
+     | &nbsp;
+  
+   <a th:href="@{/admin}">Trang Quản Lý</a>
+    
+     | &nbsp;
+    <a th:href="@{/login}">Đăng nhập</a>
+    
+     | &nbsp;
+      
+   <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Đăng Xuất</a>
+  
+</div>

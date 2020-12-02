@@ -1,0 +1,192 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SẢN PHẨM</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="webjars/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+<!-- <script type="text/javascript">
+	$(document).ready(function() {
+		$('#image').change(function() {
+			showImageThumbnail(this);
+		});
+
+	});
+	function showImageThumbnail(fileInput) {
+		file = fileInput.files[0];
+
+		reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('#thumbnail').attr('src', e.target.result);
+		};
+
+		reader.readAsDataURL(file);
+	};
+</script> -->
+
+
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+	<div class="wrapper">
+		<header th:replace="layout :: header"></header>
+		<aside th:replace="layout :: aside"></aside>
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>TRANG SẢN PHẨM</h1>
+			</section>
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+
+			<!-- /.content -->
+			<div class="container main-content form">
+				<div class="row">
+					<h2 class="myclass">Thêm sản phẩm</h2>
+					<form th:action="${ACTION}" th:object=${PRODUCTDTO} method="POST"
+						enctype="multipart/form-data">
+						<!-- <div class="form-group">
+							<label> Mã Sách</label> <input type="number" class="form-control"
+								th:field="*{id}" name="id" placeholder="Nhập mã sách" id="id" />
+						</div> -->
+
+						<div class="form-group">
+							<input type="hidden" value="103498239809230" class="form-control" name="id"
+								placeholder="Nhập mã sách" id="id">
+						</div>
+						<div class="form-group">
+							<label> Tên Sách</label> <input type="text" class="form-control"
+								th:field="*{name}" name="name" placeholder="Nhập tên sách"
+								id="name" value="" /> <span
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							class="alert-danger">Lỗi nhập tên sách</span>
+						</div>
+						<div class="form-group">
+							<label> Năm Phát Hành</label> <input type="number"
+								class="form-control" th:field="*{plsy}" name="plsy" id="plsy" placeholder="Nhập năm phát hành"
+								min="1970" max="2020" /> <span
+							th:if="${#fields.hasErrors('plsy')}" th:errors="*{plsy}"
+							class="alert-danger">Lỗi nhập năm phát hành</span>
+						</div>
+						<div class="form-group">
+							<label> Nhà Xuất Bản</label> <input type="text"
+								class="form-control" th:field="*{nxb}" name="nxb"
+								placeholder="Nhập nhà xuất bản" id="nxb" /> <span
+							th:if="${#fields.hasErrors('nxb')}" th:errors="*{nxb}"
+							class="alert-danger">Lỗi nhập tên Nhà xuất bản</span>
+						</div>
+						<div class="form-group">
+							<label> Tác Giả</label> <input type="text" class="form-control"
+								th:field="*{author}" name="author" placeholder="Nhập tên tác giả"
+								id="author" /> <span
+							th:if="${#fields.hasErrors('author')}" th:errors="*{author}"
+							class="alert-danger">Lỗi nhập tên tác giả</span>
+						</div>
+
+						<div class="form-group">
+							<label> Số Trang</label> <input type="number"
+								class="form-control" th:field="*{pagenum}" name="pagenum" placeholder="Nhập số trang"
+								id="pagenum" /> <span
+							th:if="${#fields.hasErrors('pagenum')}" th:errors="*{pagenum}"
+							class="alert-danger">Lỗi nhập số trang</span>
+						</div>
+						<div class="form-group">
+							<label> Hình Ảnh</label> <input type=file class="form-control"
+								value="" name="image" id="image" th:field="*{image}" accept="image/png, image/jpeg" />
+						</div>
+						<div class="form-group">
+							<label> Đơn Giá</label> <input type="number" class="form-control" placeholder="Nhập đơn giá"
+								th:field="*{price}" name="price" id="price" /> <span
+							th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+							class="alert-danger">Lỗi nhập đơn giá</span>
+						</div>
+						
+						<!-- <img width="30%" id="thumbnail" alt="Logo"> -->
+						<div class="form-group">
+							<label> Thể Loại</label> <select class="form-control"
+								th:field="*{id_category}">
+								<option th:each="category: ${CATEGORY}"
+									th:value="${category.id}" th:text="${category.theloai}"></option>
+							</select>
+
+						</div>
+						<div class="form-group">
+							<label>Giảm Giá (%)</label> <input type="number" class="form-control" placeholder="Nhập số % giảm giá"
+								th:field="*{sale}" min="0" max="100" name="sale" id="sale" /> <span
+							th:if="${#fields.hasErrors('sale')}" th:errors="*{sale}"
+							class="alert-danger">Lỗi nhập số % giảm giá</span>
+						</div>
+						<div class="form-group">
+							<label> Nổi Bật</label>
+							<div class="radio">
+								<!--value = 1 => True| 0 =>FALSE -->
+								<label class="checkbox-inline"> <input type="radio"
+									th:field="*{highlight}" name="highlight" value="1"
+									id="highlight1">True
+								</label> <label class="checkbox-inline"> <input type="radio"
+									th:field="*{highlight}" name="highlight" checked="checked"
+									value="0" id="highlight2">False
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Sách Mới</label>
+							<div class="radio">
+								<!--value = 1 => True| 0 =>FALSE -->
+								<label class="checkbox-inline"> <input type="radio"
+									th:field="*{new_product}" name="new_product" value="1"
+									id="new_product1">True
+								</label> <label class="checkbox-inline"> <input type="radio"
+									th:field="*{new_product}" name="new_product" checked="checked"
+									value="0" id="new_product2">False
+								</label>
+							</div>
+						</div>
+						
+					<div class="form-group">
+						<label>Miêu tả</label>
+						<textarea th:field="*{details}" class="form-control"
+							name="details" placeholder="Nhập phần miêu tả" id="details" rows="2"></textarea>
+					</div>
+					<span th:if="${#fields.hasErrors('details')}"
+						th:errors="*{details}" class="alert-danger">Lỗi nhập miêu tả</span>
+					<!-- 	<div class="form-group">
+							<label>Created_At</label> <input type="date" class="form-control"
+								th:field="*{created_at}" />
+						</div>
+						<div class="form-group">
+							<label>Updated_At</label> <input type="date" class="form-control"
+								th:field="*{updated_at}" />
+						</div> -->
+
+
+
+						<button class="btn btn-primary" type="submit">Lưu</button>
+					<button type="reset" class="btn btn-primary">Huỷ</button>
+					<a class="btn btn-primary" href="/admin/product/page/1">Danh sách</a>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+
+
+</html>
